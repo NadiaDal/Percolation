@@ -6,11 +6,16 @@ public class Percolation {
     private int N;
 
     public Percolation(int N) {
-        sites = new boolean[N * N]; // create N-by-N grid, with all sites blocked
+        sites = new boolean[N * N+1]; // create N-by-N grid, with all sites blocked
         this.N = N;
     }
 
     public static void main(String[] args) {
+//        Percolation p = new Percolation(20);
+//        System.out.println(p.convert(1,1));
+//        System.out.println(p.convert(1,2));
+//        System.out.println(p.convert(20,20));
+
     }  // test client (optional)
 
     public void open(int i, int j) {
@@ -32,17 +37,17 @@ public class Percolation {
     {
         checkArg(i);
         checkArg(j);
-        if(i-1 >=0 && isOpen((i-1), j)) return true;
-        else if (i+1 < N &&  isOpen((i+1),j)) return true;
-        else if(j-1 >=0 &&  isOpen(i, (j+1))) return true;
-        else if(j+1 < N &&  isOpen(i, (j-1))) return true;
+        if(i > 1 && isOpen((i-1), j)) return true;
+        else if (i < N &&  isOpen((i+1),j)) return true;
+        else if(j < N &&  isOpen(i, (j+1))) return true;
+        else if( j > 1 &&  isOpen(i, (j-1))) return true;
         else return false;
     }
 
     public boolean percolates()             // does the system percolate?
     {
-        for(int j =0; j < N; j++){
-            if(isFull(N-1, j)) return true;
+        for(int j = 1; j <= N; j++){
+            if(isFull(N, j)) return true;
         }
         return false;
     }
